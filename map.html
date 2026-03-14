@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crime Hotspot Map</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<h2 id="title">Crime Hotspots</h2>
+
+<!-- 🔄 REAL-TIME REFRESH (ADDED, SAFE) -->
+<div style="margin: 10px 0;">
+  <button onclick="refreshRealtime()">🔄 Refresh Real-Time Data</button>
+  <span id="refreshStatus" style="margin-left:10px;"></span>
+</div>
+
+<div class="main-container">
+
+  <div id="map"></div>
+
+  <div class="dashboard">
+
+    <div class="table-panel">
+      <h3>Country Crime Ranking</h3>
+      <table id="crimeTable">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Total Crimes</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="analysis-container">
+
+      <div class="analysis-box historic">
+        <h4>Historic Analysis</h4>
+        <p>Total Crimes: <span id="historicTotal">0</span></p>
+        <p>Solved: <span id="historicSolved">0</span></p>
+        <p>Not Solved: <span id="historicUnsolved">0</span></p>
+        <p>Solved %: <span id="historicPercent">0</span>%</p>
+      </div>
+
+      <div class="analysis-box realtime">
+        <h4>Real-Time Analysis</h4>
+        <p>Total Crimes: 0</p>
+        <p>Solved: 0</p>
+        <p>Not Solved: 0</p>
+        <p>Solved %: 0%</p>
+      </div>
+
+      <div class="analysis-box overall">
+        <h4>Overall Analysis</h4>
+        <p>Total Crimes: <span id="overallTotal">0</span></p>
+        <p>Solved: <span id="overallSolved">0</span></p>
+        <p>Not Solved: <span id="overallUnsolved">0</span></p>
+        <p>Solved %: <span id="overallPercent">0</span>%</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="js/dataProcessor.js"></script>
+<script src="js/map.js"></script>
+
+<!-- 🔄 REAL-TIME REFRESH SCRIPT (ADDED, SAFE) -->
+<script>
+function refreshRealtime() {
+  const status = document.getElementById("refreshStatus");
+  status.innerText = "Updating...";
+
+  fetch("http://127.0.0.1:8000/refresh-data", {
+    method: "POST"
+  })
+  .then(res => res.json())
+  .then(data => {
+    status.innerText = "Updated ✔ (Reload page)";
+  })
+  .catch(() => {
+    status.innerText = "Update failed ❌";
+  });
+}
+</script>
+
+</body>
+</html>

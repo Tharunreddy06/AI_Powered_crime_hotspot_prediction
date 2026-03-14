@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Crime Hotspot Prediction</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="home-body">
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <h1>AI-Based Crime Hotspot Prediction</h1>
+  <p>
+    Visualizing global crime patterns using historic + real-time data  
+    <br>
+    <span>Select a crime domain to begin analysis</span>
+  </p>
+
+  <!-- 🔄 REAL-TIME REFRESH BUTTON -->
+  <button class="refresh-btn" onclick="refreshData()">
+    🔄 Refresh Real-Time Dataset
+  </button>
+
+  <p id="status" style="margin-top:10px;"></p>
+</div>
+
+<!-- ================= SEARCH ================= -->
+<div class="search-box">
+  <input type="text" id="placeSearch" placeholder="Search country / state / city..." />
+  <button onclick="searchPlace()">Search</button>
+</div>
+
+<!-- ================= DOMAINS ================= -->
+<div class="domain-grid">
+
+  <div class="domain-card" onclick="selectDomain('theft')">
+    🕵️‍♂️ <h3>Theft</h3>
+  </div>
+
+  <div class="domain-card" onclick="selectDomain('cybercrime')">
+    💻 <h3>Cyber Crime</h3>
+  </div>
+
+  <div class="domain-card" onclick="selectDomain('political_related')">
+    🏛️ <h3>Political</h3>
+  </div>
+
+  <div class="domain-card" onclick="selectDomain('sexual_offense')">
+    🚨 <h3>Sexual Offense</h3>
+  </div>
+
+  <div class="domain-card" onclick="selectDomain('assault')">
+    👊 <h3>Assault</h3>
+  </div>
+
+  <div class="domain-card" onclick="selectDomain('OTHERS')">
+    📦 <h3>Others</h3>
+  </div>
+
+  <div class="domain-card all" onclick="selectDomain('ALL')">
+    🌍 <h3>All Crimes</h3>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 | AI Crime Hotspot Prediction</p>
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="js/domains.js"></script>
+
+<script>
+function refreshData() {
+  const status = document.getElementById("status");
+  status.innerText = "Updating real-time dataset...";
+
+  fetch("http://127.0.0.1:8000/refresh-data", {
+    method: "POST"
+  })
+  .then(res => res.json())
+  .then(data => {
+    status.innerText = data.message;
+  })
+  .catch(err => {
+    console.error(err);
+    status.innerText = "❌ Error updating dataset";
+  });
+}
+</script>
+
+</body>
+</html>

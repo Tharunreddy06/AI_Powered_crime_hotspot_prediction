@@ -1,0 +1,238 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* MAIN LAYOUT */
+.main-container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* MAP */
+#map {
+  flex: 3;
+  height: 100%;
+}
+
+/* DASHBOARD */
+.dashboard {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 10px;
+  overflow-y: auto;
+  border-left: 2px solid #ddd;
+}
+
+/* TABLE */
+.table-panel {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 6px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background: #f2f2f2;
+}
+
+/* ANALYSIS */
+.analysis-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.analysis-box {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  border-left: 6px solid #999;
+}
+
+.analysis-box.historic {
+  border-color: #1f77b4;
+}
+
+.analysis-box.realtime {
+  border-color: #2ca02c;
+}
+
+.analysis-box.overall {
+  border-color: #d62728;
+}
+#countryMap {
+  height: 90vh;
+  width: 100%;
+}
+.back-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 8px 12px;
+  background: #1d3557;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.back-btn:hover {
+  background: #457b9d;
+}
+
+#countryMap {
+  height: 85vh;
+  width: 100%;
+}
+/* ---------- HOME PAGE ---------- */
+
+.home-body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: "Segoe UI", sans-serif;
+  color: white;
+  text-align: center;
+}
+
+.hero {
+  padding: 60px 20px 30px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 16px;
+  color: #dcdcdc;
+}
+
+.hero span {
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.domain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+  padding: 40px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.domain-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 40px;
+}
+
+.domain-card h3 {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.domain-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.domain-card.all {
+  background: #e63946;
+}
+
+.domain-card.all:hover {
+  background: #ff4d5a;
+}
+
+footer {
+  padding: 15px;
+  font-size: 12px;
+  color: #cccccc;
+}
+.country-layout {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+#countryMap {
+  width: 70%;
+  height: 100%;
+}
+
+.country-dashboard {
+  width: 30%;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f9f9f9;
+}
+
+.country-dashboard table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.country-dashboard th, td {
+  border-bottom: 1px solid #ccc;
+  padding: 6px;
+}
+
+.analysis-box {
+  background: white;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 25px auto 10px;
+}
+
+.search-box input {
+  width: 280px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-box button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  background: #e63946;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-box button:hover {
+  background: #ff4d5a;
+}

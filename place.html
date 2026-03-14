@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Place Details</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h2 id="placeTitle"></h2>
+
+<div class="place-container">
+
+  <div class="place-box">
+    <h3>Crime Overview</h3>
+    <p>Total Crimes: <span id="p_total">0</span></p>
+    <p>Solved: <span id="p_solved">0</span></p>
+    <p>Not Solved: <span id="p_unsolved">0</span></p>
+    <p>Solved %: <span id="p_percent">0</span>%</p>
+  </div>
+
+  <div class="place-box">
+    <h3>Safety Precautions</h3>
+    <ul id="safetyList"></ul>
+  </div>
+
+  <div class="place-box">
+    <h3>Places to Visit</h3>
+    <ul id="visitList"></ul>
+  </div>
+
+</div>
+
+<script src="js/dataProcessor.js"></script>
+<script src="js/place.js"></script>
+</body>
+</html>

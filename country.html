@@ -1,0 +1,182 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Country Crime Analysis</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h2 id="countryTitle"></h2>
+
+<div style="margin: 10px 0;">
+  <button onclick="refreshRealtime()">🔄 Refresh Real-Time Data</button>
+  <span id="refreshStatus" style="margin-left:10px;"></span>
+</div>
+
+<div class="country-layout">
+
+  <!-- MAP -->
+  <div id="countryMap"></div>
+
+  <!-- DASHBOARD -->
+  <div class="country-dashboard">
+
+    <!-- TABLE -->
+    <div class="table-panel">
+      <h3>State Crime Ranking</h3>
+      <table id="stateTable">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Total Crimes</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- HISTORIC ANALYSIS -->
+    <div class="analysis-box historic">
+      <h4>Historic Analysis</h4>
+      <p>Total: <span id="h_total">0</span></p>
+      <p>Solved: <span id="h_solved">0</span></p>
+      <p>Not Solved: <span id="h_unsolved">0</span></p>
+      <p>Solved %: <span id="h_percent">0</span>%</p>
+    </div>
+
+    <!-- REALTIME ANALYSIS -->
+    <div class="analysis-box realtime">
+      <h4>Real-Time Analysis</h4>
+      <p>Total: <span id="r_total">0</span></p>
+      <p>Solved: <span id="r_solved">0</span></p>
+      <p>Not Solved: <span id="r_unsolved">0</span></p>
+      <p>Solved %: <span id="r_percent">0</span>%</p>
+    </div>
+
+    <!-- OVERALL ANALYSIS -->
+    <div class="analysis-box overall">
+      <h4>Overall Analysis</h4>
+      <p>Total: <span id="o_total">0</span></p>
+      <p>Solved %: <span id="o_percent">0</span>%</p>
+    </div>
+
+    <!-- HOTSPOTS -->
+    <div class="analysis-box hotspot">
+      <h4>Top 3 Hotspots</h4>
+      <div id="hotspotList">Loading...</div>
+    </div>
+
+    <!-- PREDICTION -->
+    <div class="stat-box">
+      <h3>Crime Prediction</h3>
+      <p id="predictedCrime">--%</p>
+
+      <!-- SHAP Explanation -->
+      <div id="shapExplanation" style="margin-top:10px; font-size:14px;"></div>
+
+      <button id="predictCrimeBtn">Predict</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- JS FILES -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="js/dataProcessor.js"></script>
+<script src="js/countryMap.js"></script>
+
+<!-- MAIN SCRIPT -->
+<script>
+
+/* ===============================
+   REALTIME REFRESH FUNCTION
+================================ */
+function refreshRealtime() {
+  const status = document.getElementById("refreshStatus");
+  status.innerText = "Updating...";
+
+  fetch("http://127.0.0.1:8000/refresh-data", {
+    method: "POST"
+  })
+  .then(res => res.json())
+  .then(() => {
+    status.innerText = "Updated ✔ (Reload page)";
+  })
+  .catch(() => {
+    status.innerText = "Update failed ❌";
+  });
+}
+
+/* ===============================
+   PREDICTION BUTTON
+================================ */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const btn = document.getElementById("predictCrimeBtn");
+
+  if (btn) {
+
+    btn.addEventListener("click", () => {
+
+      const country = localStorage.getItem("selectedCountry");
+      const state = localStorage.getItem("selectedState");
+
+      if (!country || !state) {
+        alert("Please click a state on the map first.");
+        return;
+      }
+
+      fetch("http://localhost:5000/predict-crime", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          country: country,
+          state: state
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+
+        /* Prediction */
+        document.getElementById("predictedCrime").innerText =
+          data.prediction + "%";
+
+        /* SHAP Explanation */
+        const shapDiv = document.getElementById("shapExplanation");
+
+        if (data.explanation_text && data.explanation_text.length > 0) {
+
+          let html = "<b>Prediction Explanation:</b><ul>";
+
+          data.explanation_text.forEach(text => {
+            html += `<li>${text}</li>`;
+          });
+
+          html += "</ul>";
+
+          shapDiv.innerHTML = html;
+
+        } else {
+          shapDiv.innerHTML = "";
+        }
+
+      })
+      .catch(err => {
+        console.error("Prediction error:", err);
+      });
+
+    });
+
+  }
+
+});
+</script>
+
+</body>
+</html>
+```
